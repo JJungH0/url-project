@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: jjung
+  datasource:
+    url: jdbc:mysql://localhost:3306/url_shortener?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 3839qneo
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    show-sql: true # 현재 실행중인 SQL쿼리를 실시간으로 보여줌 (콘솔)
+    hibernate:
+      ddl-auto: create # 운영 시 validation으로 변경
+    properties:
+      hibernate:
+        format_sql: true # 가독성 좋게 줄바꿈
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+jwt:
+  secret: #시크릿키 설정
+  access-expiration: 1800000
+  refresh-expiration: 604800000
+
+app:
+  base-url: http://localhost:8080
