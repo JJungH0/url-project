@@ -21,7 +21,7 @@ spring:
       port: 6379
 
 jwt:
-  secret: #시크릿키 설정
+  secret: 894b7ff7de109ef84c5ce804e9c4a82f27b8b3b39df15eedabc9d5bc334ae181
   access-expiration: 1800000
   refresh-expiration: 604800000
 
