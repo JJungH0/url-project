@@ -1,10 +1,12 @@
 package com.url.jjung.domain.auth.dto;
 
-public class LoginResp {
+import lombok.Builder;
+import lombok.Getter;
 
-    private String accessToken;
-    private String refreshToken;
-    private String email;
-    private String nickname;
+public record LoginResp(
+        String accessToken,
+        String refreshToken,
+        String email,
+        String nickname) {
 
 }
