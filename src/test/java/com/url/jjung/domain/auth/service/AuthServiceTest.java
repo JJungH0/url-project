@@ -5,6 +5,7 @@ import com.url.jjung.domain.auth.dto.LoginResp;
 import com.url.jjung.domain.auth.dto.RegisterReq;
 import com.url.jjung.domain.auth.entity.User;
 import com.url.jjung.domain.auth.repository.UserRepository;
+import com.url.jjung.global.exception.CustomException;
 import com.url.jjung.global.jwt.JwtProvider;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -64,7 +65,7 @@ class AuthServiceTest {
 
         // when & then
         assertThatThrownBy(() -> authService.register(req))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(CustomException.class)
                 .hasMessage("이미 사용중인 이메일입니다.");
     }
 
@@ -105,7 +106,7 @@ class AuthServiceTest {
 
         // when & then
         assertThatThrownBy(() -> authService.login(req))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(CustomException.class)
                 .hasMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
     }
 
@@ -126,7 +127,7 @@ class AuthServiceTest {
 
         // when & then
         assertThatThrownBy(() -> authService.login(req))
-                .isInstanceOf(IllegalArgumentException.class)
+                .isInstanceOf(CustomException.class)
                 .hasMessage("이메일 또는 비밀번호가 올바르지 않습니다.");
     }
 }
