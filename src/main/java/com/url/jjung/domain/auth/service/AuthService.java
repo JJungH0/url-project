@@ -5,6 +5,8 @@ import com.url.jjung.domain.auth.dto.LoginResp;
 import com.url.jjung.domain.auth.dto.RegisterReq;
 import com.url.jjung.domain.auth.entity.User;
 import com.url.jjung.domain.auth.repository.UserRepository;
+import com.url.jjung.global.exception.CustomException;
+import com.url.jjung.global.exception.ErrorCode;
 import com.url.jjung.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,7 +24,7 @@ public class AuthService {
     @Transactional
     public void register(RegisterReq req) {
         if (userRepository.existsByEmail(req.email())) {
-            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
 
         User user = User.builder()
@@ -36,10 +38,10 @@ public class AuthService {
 
     public LoginResp login(LoginReq req) {
         User user = userRepository.findByEmail(req.email())
-                .orElseThrow(() -> new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다."));
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_CREDENTIALS));
 
         if (!passwordEncoder.matches(req.password(), user.getPassword())) {
-            throw new IllegalArgumentException("이메일 또는 비밀번호가 올바르지 않습니다.");
+            throw new CustomException(ErrorCode.INVALID_CREDENTIALS);
         }
 
         String accessToken = jwtProvider.generateAccessToken(user.getEmail());
