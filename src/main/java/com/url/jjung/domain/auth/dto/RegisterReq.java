@@ -13,7 +13,7 @@ public record RegisterReq(
 
         @NotBlank(message = "비밀번호는 8자 이상이어야 합니다.")
         @Pattern(
-                regexp = "^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[@$!%*#?&]).{8,20}$",
+                regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&]).{8,20}$",
                 message = "비밀번호는 영문, 숫자, 특수문자(@$!%*#?&)를 포함하여 8자 이상 20자 이하로 입력해주세요."
         )
         String password,
