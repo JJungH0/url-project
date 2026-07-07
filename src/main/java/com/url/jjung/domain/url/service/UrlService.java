@@ -38,11 +38,6 @@ public class UrlService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
-        shortUrlRepository.findByUser_IdAndOriginalUrl(user.getId(), req.originalUrl())
-                .ifPresent(url -> {
-                    throw new CustomException(ErrorCode.URL_DUPLICATE);
-                });
-
         String shortCode = generateUniqueShortCode();
 
         int days = Objects.nonNull(req.expirationDays()) ? req.expirationDays() : 30;
