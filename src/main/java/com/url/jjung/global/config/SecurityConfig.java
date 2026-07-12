@@ -1,5 +1,6 @@
 package com.url.jjung.global.config;
 
+import com.url.jjung.global.filter.RateLimitFilter;
 import com.url.jjung.global.jwt.JwtFilter;
 import com.url.jjung.global.jwt.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtProvider jwtProvider;
+    private final RateLimitFilter rateLimitFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
@@ -28,7 +30,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/r/**").permitAll()
                         .anyRequest().authenticated())
-                .addFilterBefore(new JwtFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtFilter(jwtProvider), RateLimitFilter.class);
         return http.build();
     }
 
